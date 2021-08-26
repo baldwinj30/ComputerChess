@@ -7,11 +7,11 @@
 int main()
 {
     bool GameOver = false;
-    Player WhitePlayer = Player(true);
-    Player BlackPlayer = Player(false);
     std::shared_ptr<Board> GameBoard = Board::instance();
     GameBoard->createBoard(8, 8);
     GameBoard->printBoard();
+    Player WhitePlayer = Player(true);
+    Player BlackPlayer = Player(false);
 
     while (!GameOver)
     {

@@ -1,3 +1,19 @@
+enum PieceType
+{
+    WhitePawn,
+    WhiteRook,
+    WhiteKnight,
+    WhiteBishop,
+    WhiteKing,
+    WhiteQueen,
+    BlackPawn,
+    BlackRook,
+    BlackKnight,
+    BlackBishop,
+    BlackKing,
+    BlackQueen
+};
+
 class Piece
 {
     public:
@@ -10,4 +26,5 @@ class Piece
     int Row;
     int Column;
     bool Color;
+    PieceType PieceLabel;
 };

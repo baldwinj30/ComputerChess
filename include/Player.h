@@ -8,7 +8,7 @@ class Player
 
     Player(bool Color){
         this->Color = Color;
-        // createPieces();
+        createPieces();
     }
 
     bool Color;
@@ -16,5 +16,5 @@ class Player
 
     private:
 
-    // void createPieces();
+    void createPieces();
 };

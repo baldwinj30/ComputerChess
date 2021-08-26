@@ -17,6 +17,9 @@ class Board
     bool
     createBoard(int Width, int Length);
 
+    bool
+    createPieces();
+
     void
     printBoard();
 
