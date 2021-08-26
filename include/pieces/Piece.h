@@ -38,11 +38,12 @@ class Piece
 
     bool operator==(const Piece &RHS) const;
 
+    PieceType PieceLabel {PieceType::Empty};
+
     private:
     int Row;
     int Column;
     bool Color;
-    PieceType PieceLabel {PieceType::Empty};
 };
 
 #endif /* PIECE_H */

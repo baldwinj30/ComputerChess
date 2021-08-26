@@ -4,22 +4,26 @@
 #include <vector>
 
 #include "pieces/Piece.h"
+#include "Board.h"
 
 class Player
 {
     public:
 
-    Player(bool Color){
+    Player(bool Color)
+    {
         this->Color = Color;
-        createPieces();
+        BoardInstance = Board::instance();
     }
 
+    bool
+    makeRandomMove();
+
     bool Color;
-    std::vector<Piece> PlayerPieces;
 
     private:
+    std::shared_ptr<Board> BoardInstance;
 
-    void createPieces();
 };
 
 #endif /* PLAYER_H */
