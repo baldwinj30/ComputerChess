@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "Player.h"
+
 int main()
 {
     bool GameOver = false;

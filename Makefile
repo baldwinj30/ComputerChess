@@ -12,15 +12,15 @@ OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.cpp=.o))
 
 # Link
 $(TARGET): $(OBJECTS)
-	@echo " Linking...";
+	@echo "Linking...";
 	$(CXX) $^ -o $(TARGET)
 
 # Build
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo "Building...";
 	@mkdir -p $(BUILDDIR);
-	$(CXX) $(CXXFLAGS) $(INC) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -c -o $@ $<
 
 clean:
-	@echo " Cleaning..."; 
-	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"; $(RM) -r $(BUILDDIR) $(TARGET)
+	@echo "Cleaning..."; 
+	$(RM) -r $(BUILDDIR) $(TARGET)
