@@ -70,7 +70,16 @@ Board::createBoard(int Width, int Length)
 bool
 Board::createPiece(int X, int Y, PieceType Type, bool Color)
 {
-    BoardState[std::pair<int, int>(X, Y)] = Piece(X, Y, Type, Color);
+    Piece NewPiece = Piece(X, Y, Type, Color);
+    BoardState[std::pair<int, int>(X, Y)] = NewPiece;
+    if (Color)
+    {
+        WhitePieces.insert(NewPiece);
+    }
+    else
+    {
+        BlackPieces.insert(NewPiece);
+    }
 }
 
 void

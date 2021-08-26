@@ -5,13 +5,13 @@
 
 enum PieceType
 {
+    Empty,
     Pawn,
-    Rook,
     Knight,
     Bishop,
-    King,
+    Rook,
     Queen,
-    Empty
+    King
 };
 
 class Piece
@@ -34,6 +34,11 @@ class Piece
     friend
     std::ostream& operator<<(std::ostream & OutputStream, const Piece &PrintPiece);
 
+    bool operator<(const Piece &RHS) const;
+
+    bool operator==(const Piece &RHS) const;
+
+    private:
     int Row;
     int Column;
     bool Color;

@@ -1,9 +1,9 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <vector>
 #include <memory>
 #include <map>
+#include <set>
 
 #include "pieces/Piece.h"
 
@@ -29,8 +29,9 @@ class Board
     void
     printBoard();
 
-    // std::vector<std::vector<int>> BoardState;
     std::map<std::pair<int, int>, Piece> BoardState;
+    std::set<Piece> WhitePieces;
+    std::set<Piece> BlackPieces;
     int Width;
     int Length;
 };
