@@ -1,3 +1,6 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include <vector>
 
 #include "pieces/Piece.h"
@@ -18,3 +21,5 @@ class Player
 
     void createPieces();
 };
+
+#endif /* PLAYER_H */
