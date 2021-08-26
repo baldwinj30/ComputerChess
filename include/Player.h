@@ -1,3 +1,7 @@
+#include <vector>
+
+#include "pieces/Piece.h"
+
 class Player
 {
     public:
@@ -8,6 +12,7 @@ class Player
     }
 
     bool Color;
+    std::vector<Piece> PlayerPieces;
 
     private:
 
