@@ -1,6 +1,13 @@
 class Piece
 {
+    public:
+
+    virtual bool
+    movePiece() {};
+
     private:
 
-    int position;
+    int Row;
+    int Column;
+    bool Color;
 };

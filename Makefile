@@ -17,8 +17,7 @@ $(TARGET): $(OBJECTS)
 
 # Build
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
-	@echo "Building...";
-	@mkdir -p $(BUILDDIR);
+	@mkdir -p $(@D);
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -c -o $@ $<
 
 clean:
