@@ -59,14 +59,16 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
     }
 
     /* Check for a blocked path */
-    if (BoardState.at(OneForward).PieceLabel != PieceType::Empty)
+    auto PieceOneForward = BoardState.find(OneForward);
+    if (PieceOneForward != BoardState.end() &&
+        PieceOneForward->second.PieceLabel == PieceType::Empty)
     {
         PathBlocked = true;
+        ValidPossibleMoves.push_back(OneForward);
     }
     else
     {
-        PathBlocked = false;
-        ValidPossibleMoves.push_back(OneForward);
+        PathBlocked = true;
     }
 
     /* Next, check diagonal moves */
@@ -95,5 +97,4 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
     }
 
     return ValidPossibleMoves;
-    // return boardVerification(ValidPossibleMoves, MaxWidth, MaxLength);
 }
