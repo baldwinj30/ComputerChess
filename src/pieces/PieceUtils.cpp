@@ -1,33 +1,29 @@
 #include "pieces/PieceUtils.h"
 
 /**
- * Helper function to ensure that possible moves are within the board.
- * This should always be the last step of running possible moves.
+ * Helper function for bishops and rooks to check a coordinate.
  */
-std::vector<std::pair<int, int>>
-boardVerification(std::vector<std::pair<int, int>> CandidateMoves, int MaxWidth, int MaxLength)
+bool
+checkCoord(std::vector<std::pair<int, int>> &PossibleMoves, int Column, int Row, bool Color,
+            const std::map<std::pair<int, int>, Piece> &BoardState)
 {
-    std::vector<std::pair<int, int>> ValidatedMoves;
-    for (unsigned i = 0; i < CandidateMoves.size(); i++)
+    std::pair<int, int> PotentialCoord(Column, Row);
+    Piece PotentialBoardSpot = BoardState.at(PotentialCoord);
+    if (PotentialBoardSpot.PieceLabel == PieceType::Empty)
     {
-        int Column = CandidateMoves[i].first;
-        int Row = CandidateMoves[i].second;
-        if (Row >= MaxLength || Row < 0)
-        {
-            continue;
-        }
-        else if (Column >= MaxWidth || Column < 0)
-        {
-            continue;
-        }
-        else
-        {
-            ValidatedMoves.push_back(CandidateMoves[i]);
-        }
+        PossibleMoves.push_back(PotentialCoord);
+        return true;
     }
-    return ValidatedMoves;
+    else if (PotentialBoardSpot.getColor() == Color)
+    {
+        return false;
+    }
+    else
+    {
+        PossibleMoves.push_back(PotentialCoord);
+        return false;
+    }
 }
-
 
 std::vector<std::pair<int, int>>
 possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
@@ -97,4 +93,44 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
     }
 
     return ValidPossibleMoves;
+}
+
+std::vector<std::pair<int, int>>
+possibleRookMoves(Piece Rook, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
+{
+    std::vector<std::pair<int, int>> PossibleMoves;
+    int InitialRow = Rook.getRow();
+    int InitialColumn = Rook.getColumn();
+    bool Color = Rook.getColor();
+
+    for (int i = InitialRow + 1; i < MaxLength; i++)
+    {
+        if (!checkCoord(PossibleMoves, InitialColumn, i, Color, BoardState))
+        {
+            break;
+        }
+    }
+    for (int i = InitialRow - 1; i >= 0; i--)
+    {
+        if (!checkCoord(PossibleMoves, InitialColumn, i, Color, BoardState))
+        {
+            break;
+        }
+    }
+    for (int i = InitialColumn + 1; i < MaxWidth; i++)
+    {
+        if (!checkCoord(PossibleMoves, i, InitialRow, Color, BoardState))
+        {
+            break;
+        }
+    }
+    for (int i = InitialColumn - 1; i >= 0; i--)
+    {
+        if (!checkCoord(PossibleMoves, i, InitialRow, Color, BoardState))
+        {
+            break;
+        }
+    }
+    
+    return PossibleMoves;
 }

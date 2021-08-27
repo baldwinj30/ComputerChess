@@ -15,5 +15,12 @@ std::vector<std::pair<int, int>>
 possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
 
 
+/**
+ * Rooks can move up and down single rows and columns until they run into an enemy piece.
+ */
+std::vector<std::pair<int, int>>
+possibleRookMoves(Piece Rook, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
+
+
 
 #endif

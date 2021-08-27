@@ -33,6 +33,7 @@ Player::makeRandomMove()
     while (PossibleMoves.empty() && Idx < 2*TotalPieces)
     {
         MovePiece = ColorPieces[Idx % TotalPieces];
+        std::cout << MovePiece << "\n";
         PossibleMoves = MovePiece.getPossibleMoves(BoardInstance->BoardState, 
                 BoardInstance->Width, BoardInstance->Length);
         Idx++;

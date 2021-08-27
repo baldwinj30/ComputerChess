@@ -28,6 +28,7 @@ int main()
         if (!BlackPlayer.makeRandomMove())
         {
             std::cout << "Stalemate, Black can't move\n";
+            break;
         }
         GameBoard->printBoard();
         std::cout << "**********\n";

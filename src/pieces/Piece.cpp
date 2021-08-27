@@ -46,6 +46,8 @@ Piece::getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
     {
         case PieceType::Pawn: PossibleMoves = possiblePawnMoves(*this, BoardState, MaxWidth, MaxLength);
             break;
+        case PieceType::Rook: PossibleMoves = possibleRookMoves(*this, BoardState, MaxWidth, MaxLength);
+            break;
         default:
             break;
     }
