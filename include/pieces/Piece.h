@@ -16,6 +16,9 @@ enum PieceType
     King
 };
 
+/**
+ * Represents either a chess piece or an empty spot on the board.
+ */
 class Piece
 {
     public:
@@ -45,10 +48,19 @@ class Piece
     bool
     getColor() const { return Color; }
 
+    /**
+     * Find all the possible moves for the piece at a given board state.
+     * 
+     * Return the moves as a vecotr of pairs of final <column, row>.
+     */
     std::vector<std::pair<int, int>>
     getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
                         int MaxWidth, int MaxLength) const;
 
+    /**
+     * Find all the current threats to a piece; primarily to be used for determining
+     * check and checkmate on the king.
+     */
     bool
     checkThreats();
 

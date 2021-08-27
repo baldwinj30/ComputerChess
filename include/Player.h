@@ -16,6 +16,11 @@ class Player
         BoardInstance = Board::instance();
     }
 
+    /**
+     * Make a random move. Return true if we could make a move
+     * (normal gameplay) and false if not (ultimately this will mean
+     * stalemate or checkmate)
+     */
     bool
     makeRandomMove();
 
