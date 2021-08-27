@@ -6,9 +6,29 @@
 #include "Player.h"
 #include "Board.h"
 
-int main()
+int main(int argc, char * argv[])
 {
-    std::srand(std::time(nullptr));
+    unsigned int seed;
+    /* Simple argument parsing. */
+    if (argc > 2)
+    {
+        std::cout << "This program accepts only one optional unsigned integer argument for the RNG seed.\n";
+        return 0;
+    }
+    else if (argc == 2)
+    {
+        seed = std::atoi(argv[1]);
+        if (seed == 0)
+        {
+            std::cout << "Either bad input was passed or the seed was manually set to 0. Continuing...\n";
+        }
+    }
+    else
+    {
+        seed = std::time(nullptr);
+    }
+
+    std::srand(seed);
     int TurnCount = 0;
     bool GameOver = false;
     std::shared_ptr<Board> GameBoard = Board::instance();
@@ -32,7 +52,7 @@ int main()
         }
         GameBoard->printBoard();
         std::cout << "**********\n";
-        std::cout << "----------\n";
+        std::cout << "++++++++++\n";
         TurnCount++;
         if (TurnCount > 50)
         {
