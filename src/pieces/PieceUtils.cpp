@@ -83,7 +83,7 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
         ValidPossibleMoves.push_back(DiagonalRight);
     }
 
-    /* Finally, if there is no piece in the way and we are at the home row,
+    /* Finally, if there is no piece in the way and we are at the starting position,
     try moving two forward */
     if (!PathBlocked && 
         ((Color && InitialRow == MaxLength - 2) || (!Color && InitialRow == 1)) &&
@@ -142,9 +142,9 @@ possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &Bo
     int InitialRow = Bishop.getRow();
     int InitialColumn = Bishop.getColumn();
     bool Color = Bishop.getColor();
+    
     int i = InitialRow + 1;
     int j = InitialColumn + 1;
-
     while (i < MaxWidth && j < MaxLength)
     {
         if (!checkCoord(PossibleMoves, j, i, Color, BoardState))
@@ -201,4 +201,77 @@ possibleQueenMoves(Piece Queen, const std::map<std::pair<int, int>, Piece> &Boar
     std::vector<std::pair<int, int>> PossibleMovesBishop = possibleBishopMoves(Queen, BoardState, MaxWidth, MaxLength);
     PossibleMovesRook.insert(PossibleMovesRook.end(), PossibleMovesBishop.begin(), PossibleMovesBishop.end());
     return PossibleMovesRook;
+}
+
+std::vector<std::pair<int, int>>
+possibleKnightMoves(Piece Knight, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
+{
+    std::vector<std::pair<int, int>> PossibleMoves;
+    int InitialRow = Knight.getRow();
+    int InitialColumn = Knight.getColumn();
+    bool Color = Knight.getColor();
+    std::pair<int, int> PossibleCoord;
+    int i;
+    int j; 
+
+    /* No choice but to brute force it. We don't care about the return value
+    because we can jump pieces with the knight. */
+    i = InitialRow + 2;
+    j = InitialColumn + 1;
+    PossibleCoord = std::pair<int, int>(j, i);
+    if (BoardState.count(PossibleCoord) > 0)
+    {
+        checkCoord(PossibleMoves, j, i, Color, BoardState);
+    }
+    i = InitialRow + 2;
+    j = InitialColumn - 1;
+    PossibleCoord = std::pair<int, int>(j, i);
+    if (BoardState.count(PossibleCoord) > 0)
+    {
+        checkCoord(PossibleMoves, j, i, Color, BoardState);
+    }
+    i = InitialRow - 2;
+    j = InitialColumn + 1;
+    PossibleCoord = std::pair<int, int>(j, i);
+    if (BoardState.count(PossibleCoord) > 0)
+    {
+        checkCoord(PossibleMoves, j, i, Color, BoardState);
+    }
+    i = InitialRow - 2;
+    j = InitialColumn - 1;
+    PossibleCoord = std::pair<int, int>(j, i);
+    if (BoardState.count(PossibleCoord) > 0)
+    {
+        checkCoord(PossibleMoves, j, i, Color, BoardState);
+    }
+    i = InitialRow + 1;
+    j = InitialColumn + 2;
+    PossibleCoord = std::pair<int, int>(j, i);
+    if (BoardState.count(PossibleCoord) > 0)
+    {
+        checkCoord(PossibleMoves, j, i, Color, BoardState);
+    }
+    i = InitialRow + 1;
+    j = InitialColumn - 2;
+    PossibleCoord = std::pair<int, int>(j, i);
+    if (BoardState.count(PossibleCoord) > 0)
+    {
+        checkCoord(PossibleMoves, j, i, Color, BoardState);
+    }
+    i = InitialRow - 1;
+    j = InitialColumn + 2;
+    PossibleCoord = std::pair<int, int>(j, i);
+    if (BoardState.count(PossibleCoord) > 0)
+    {
+        checkCoord(PossibleMoves, j, i, Color, BoardState);
+    }
+    i = InitialRow - 1;
+    j = InitialColumn - 2;
+    PossibleCoord = std::pair<int, int>(j, i);
+    if (BoardState.count(PossibleCoord) > 0)
+    {
+        checkCoord(PossibleMoves, j, i, Color, BoardState);
+    }
+
+    return PossibleMoves;
 }

@@ -32,4 +32,11 @@ possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &Bo
 std::vector<std::pair<int, int>>
 possibleQueenMoves(Piece Queen, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
 
+/**
+ * Knights can move in an L in any direction and they may jump pieces, so they only care about
+ * their final landing spot.
+ */
+std::vector<std::pair<int, int>>
+possibleKnightMoves(Piece Knight, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
+
 #endif
