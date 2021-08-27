@@ -86,7 +86,8 @@ Player::makeRandomMove()
         BoardInstance->BlackPieces.insert(MovePiece);
     }
     BoardInstance->BoardState[TheMove] = MovePiece;
-    std::cout << "move: " << MovePiece << std::endl;
+    std::cout << "move: " << MovePiece <<  " to (" << MovePiece.getColumn() << "," << 
+        MovePiece.getRow() << ")" << std::endl;
 
     return true;
 }

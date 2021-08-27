@@ -20,8 +20,9 @@ that entirely legal moves are occurring from one step to the next, with the exce
 there should be an indication of the piece that moved, and below there should be a separator of asterisks before the next board,
 and after White and Black have each taken a turn there will be a separator of plus signs.
 
-The chess board prints with two dashes (`--`) to represent an empty space. The occupied spaces have a capital `W` or `B`
-to represent the color of the piece, and then a lower case letter to represent the type of piece:
+The chess board prints with two dashes (`--`) to represent an empty space. The upper left corner i sthe origin.
+The occupied spaces have a capital `W` or `B` to represent the color of the piece, and then a lower case letter
+to represent the type of piece:
 
 * p - pawn
 * n - knight
