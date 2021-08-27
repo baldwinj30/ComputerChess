@@ -29,7 +29,7 @@ operator<<(std::ostream & OutputStream, const Piece &PrintPiece)
             break;
         case PieceType::King: OutputString += "k";
             break;
-        case PieceType::Empty: OutputString = "00";
+        case PieceType::Empty: OutputString = "--";
             break;
         default: OutputString = "PRINT ERROR\n";
             break;
