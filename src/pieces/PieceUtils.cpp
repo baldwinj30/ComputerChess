@@ -51,7 +51,7 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
         OneForward = std::pair<int, int>(InitialColumn, InitialRow + 1);
         TwoForward = std::pair<int, int>(InitialColumn, InitialRow + 2);
         DiagonalRight.second = InitialRow + 1;
-        DiagonalRight.second = InitialRow + 1;
+        DiagonalLeft.second = InitialRow + 1;
     }
 
     /* Check for a blocked path */
@@ -133,4 +133,72 @@ possibleRookMoves(Piece Rook, const std::map<std::pair<int, int>, Piece> &BoardS
     }
     
     return PossibleMoves;
+}
+
+std::vector<std::pair<int, int>>
+possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
+{
+    std::vector<std::pair<int, int>> PossibleMoves;
+    int InitialRow = Bishop.getRow();
+    int InitialColumn = Bishop.getColumn();
+    bool Color = Bishop.getColor();
+    int i = InitialRow + 1;
+    int j = InitialColumn + 1;
+
+    while (i < MaxWidth && j < MaxLength)
+    {
+        if (!checkCoord(PossibleMoves, j, i, Color, BoardState))
+        {
+            break;
+        }
+        i++;
+        j++;
+    }
+    
+    i = InitialRow + 1;
+    j = InitialColumn - 1;
+    while (i < MaxWidth && j >= 0)
+    {
+        if (!checkCoord(PossibleMoves, j, i, Color, BoardState))
+        {
+            break;
+        }
+        i++;
+        j--;
+    }
+
+    i = InitialRow - 1;
+    j = InitialColumn + 1;
+    while (i >= 0 && j < MaxLength)
+    {
+        if (!checkCoord(PossibleMoves, j, i, Color, BoardState))
+        {
+            break;
+        }
+        i--;
+        j++;
+    }
+
+    i = InitialRow - 1;
+    j = InitialColumn - 1;
+    while (i >= 0 && j >= 0)
+    {
+        if (!checkCoord(PossibleMoves, j, i, Color, BoardState))
+        {
+            break;
+        }
+        i--;
+        j--;
+    }
+    
+    return PossibleMoves;
+}
+
+std::vector<std::pair<int, int>>
+possibleQueenMoves(Piece Queen, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
+{
+    std::vector<std::pair<int, int>> PossibleMovesRook = possibleRookMoves(Queen, BoardState, MaxWidth, MaxLength);
+    std::vector<std::pair<int, int>> PossibleMovesBishop = possibleBishopMoves(Queen, BoardState, MaxWidth, MaxLength);
+    PossibleMovesRook.insert(PossibleMovesRook.end(), PossibleMovesBishop.begin(), PossibleMovesBishop.end());
+    return PossibleMovesRook;
 }
