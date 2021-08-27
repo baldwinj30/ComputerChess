@@ -68,6 +68,9 @@ Player::makeRandomMove()
     {
         BoardInstance->BlackPieces.erase(MovePiece);
     }
+    /* Remove the old position from the board */
+    BoardInstance->BoardState[
+        std::pair<int, int>(MovePiece.getColumn(), MovePiece.getRow())] = Piece();
     MovePiece.setColumn(TheMove.first);
     MovePiece.setRow(TheMove.second);
     /* Now this is really our last color check and update */
