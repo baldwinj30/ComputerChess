@@ -2,6 +2,8 @@
 #define PIECE_H
 
 #include <iostream>
+#include <vector>
+#include <map>
 
 enum PieceType
 {
@@ -28,8 +30,24 @@ class Piece
         Color = Team;
     }
 
+    int
+    getRow() const { return Row; }
+
+    int
+    getColumn() const { return Column; }
+
+    void
+    setRow(int Row) { this->Row = Row; }
+
+    void
+    setColumn(int Column) { this->Column = Column; }
+
     bool
-    movePiece() {};
+    getColor() const { return Color; }
+
+    std::vector<std::pair<int, int>>
+    getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
+                        int MaxWidth, int MaxLength);
 
     friend
     std::ostream& operator<<(std::ostream & OutputStream, const Piece &PrintPiece);

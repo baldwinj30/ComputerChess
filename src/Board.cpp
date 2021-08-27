@@ -5,7 +5,7 @@
 bool
 Board::createBoard(int Width, int Length)
 {
-    /* Define the columns for each piece. */
+    /* Define the initial columns for each piece. */
     int RookColumn1 = 0;
     int RookColumn2 = Width - 1;
     int KnightColumn1 = 1;

@@ -1,4 +1,5 @@
 #include "pieces/Piece.h"
+#include "pieces/PieceUtils.h"
 
 #include <string>
 
@@ -34,6 +35,21 @@ operator<<(std::ostream & OutputStream, const Piece &PrintPiece)
             break;
     }
     return OutputStream << OutputString;
+}
+
+std::vector<std::pair<int, int>>
+Piece::getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
+                    int MaxWidth, int MaxLength)
+{
+    std::vector<std::pair<int, int>> PossibleMoves;
+    switch (PieceLabel)
+    {
+        case PieceType::Pawn: PossibleMoves = possiblePawnMoves(*this, BoardState, MaxWidth, MaxLength);
+            break;
+        default:
+            break;
+    }
+    return PossibleMoves;
 }
 
 bool 

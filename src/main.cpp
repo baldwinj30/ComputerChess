@@ -15,7 +15,13 @@ int main()
 
     while (!GameOver)
     {
-        std::cout << "hello world\n";
+        WhitePlayer.makeRandomMove();
+        GameBoard->printBoard();
+        std::cout << "**********";
+        BlackPlayer.makeRandomMove();
+        GameBoard->printBoard();
+        std::cout << "**********";
+        std::cout << "----------";
         GameOver = true;
     }
 
