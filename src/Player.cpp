@@ -2,6 +2,7 @@
 #include "Utils.h"
 
 #include <cstdlib>
+#include <algorithm>
 
 bool
 Player::makeRandomMove()
@@ -22,6 +23,7 @@ Player::makeRandomMove()
     {
         ColorPieces = getPieces(BoardInstance->BlackPieces, King);
     }
+    std::random_shuffle(ColorPieces.begin(), ColorPieces.end());
 
     TotalPieces = ColorPieces.size();
     Idx = getRandBelow(TotalPieces);

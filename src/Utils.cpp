@@ -22,5 +22,5 @@ int
 getRandBelow(int Max)
 {
     int RandValue = std::rand();
-    return RandValue / ((RAND_MAX) / Max);
+    return RandValue % Max;
 }

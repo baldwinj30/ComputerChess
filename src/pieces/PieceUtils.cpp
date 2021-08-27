@@ -45,13 +45,17 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
     /* Set our directional moves based on color */
     if (Pawn.getColor())
     {
-        OneForward = std::pair<int, int>(InitialColumn, InitialRow + 1);
-        TwoForward = std::pair<int, int>(InitialColumn, InitialRow + 2);
+        OneForward = std::pair<int, int>(InitialColumn, InitialRow - 1);
+        TwoForward = std::pair<int, int>(InitialColumn, InitialRow - 2);
+        DiagonalRight.second = InitialRow - 1;
+        DiagonalLeft.second = InitialRow - 1;
     }
     else
     {
-        OneForward = std::pair<int, int>(InitialColumn, InitialRow - 1);
-        TwoForward = std::pair<int, int>(InitialColumn, InitialRow - 2);
+        OneForward = std::pair<int, int>(InitialColumn, InitialRow + 1);
+        TwoForward = std::pair<int, int>(InitialColumn, InitialRow + 2);
+        DiagonalRight.second = InitialRow + 1;
+        DiagonalRight.second = InitialRow + 1;
     }
 
     /* Check for a blocked path */
@@ -66,15 +70,17 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
     }
 
     /* Next, check diagonal moves */
-    Piece PieceDiagonalLeft = BoardState.at(DiagonalLeft);
-    Piece PieceDiagonalRight = BoardState.at(DiagonalRight);
-    if (PieceDiagonalLeft.getColor() != Color && 
-        PieceDiagonalLeft.PieceLabel != PieceType::Empty)
+    auto PieceDiagonalLeft = BoardState.find(DiagonalLeft);
+    auto PieceDiagonalRight = BoardState.find(DiagonalRight);
+    if (PieceDiagonalLeft != BoardState.end() &&
+        PieceDiagonalLeft->second.getColor() != Color && 
+        PieceDiagonalLeft->second.PieceLabel != PieceType::Empty)
     {
         ValidPossibleMoves.push_back(DiagonalLeft);
     }    
-    if (PieceDiagonalRight.getColor() != Color && 
-        PieceDiagonalRight.PieceLabel != PieceType::Empty)
+    if (PieceDiagonalRight != BoardState.end() &&
+        PieceDiagonalRight->second.getColor() != Color && 
+        PieceDiagonalRight->second.PieceLabel != PieceType::Empty)
     {
         ValidPossibleMoves.push_back(DiagonalRight);
     }
@@ -82,11 +88,12 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
     /* Finally, if there is no piece in the way and we are at the home row,
     try moving two forward */
     if (!PathBlocked && 
-        ((Color && InitialRow == 1) || (!Color && InitialRow == MaxLength - 2)) &&
+        ((Color && InitialRow == MaxLength - 2) || (!Color && InitialRow == 1)) &&
         BoardState.at(TwoForward).PieceLabel == PieceType::Empty)
     {
         ValidPossibleMoves.push_back(TwoForward);
     }
 
-    return boardVerification(ValidPossibleMoves, MaxWidth, MaxLength);
+    return ValidPossibleMoves;
+    // return boardVerification(ValidPossibleMoves, MaxWidth, MaxLength);
 }

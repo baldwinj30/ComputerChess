@@ -69,7 +69,7 @@ Piece::operator<(const Piece &RHS) const
     {
         return true;
     }
-    else
+    else if (PieceLabel > RHS.PieceLabel)
     {
         return false;
     }
@@ -78,7 +78,7 @@ Piece::operator<(const Piece &RHS) const
     {
         return true;
     }
-    else
+    else if (Row > RHS.Row)
     {
         return false;
     }
@@ -87,7 +87,7 @@ Piece::operator<(const Piece &RHS) const
     {
         return true;
     }
-    else
+    else if (Column > RHS.Column)
     {
         return false;
     }
