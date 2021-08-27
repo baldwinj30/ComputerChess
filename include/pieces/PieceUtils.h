@@ -39,4 +39,10 @@ possibleQueenMoves(Piece Queen, const std::map<std::pair<int, int>, Piece> &Boar
 std::vector<std::pair<int, int>>
 possibleKnightMoves(Piece Knight, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
 
+/**
+ * Lastly the king, who can move one square in any direction as long as he does not move into threats.
+ */
+std::vector<std::pair<int, int>>
+possibleKingMoves(Piece King, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
+
 #endif

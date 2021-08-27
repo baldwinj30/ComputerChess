@@ -1,7 +1,7 @@
 #include "pieces/PieceUtils.h"
 
 /**
- * Helper function for bishops and rooks to check a coordinate.
+ * Helper function to check a coordinate and determine if the path is blocked.
  */
 bool
 checkCoord(std::vector<std::pair<int, int>> &PossibleMoves, int Column, int Row, bool Color,
@@ -273,5 +273,27 @@ possibleKnightMoves(Piece Knight, const std::map<std::pair<int, int>, Piece> &Bo
         checkCoord(PossibleMoves, j, i, Color, BoardState);
     }
 
+    return PossibleMoves;
+}
+
+std::vector<std::pair<int, int>>
+possibleKingMoves(Piece King, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
+{
+    std::vector<std::pair<int, int>> PossibleMoves;
+    int InitialRow = King.getRow();
+    int InitialColumn = King.getColumn();
+    bool Color = King.getColor();
+
+    for (int i = InitialRow - 1; i < InitialRow + 2; i++)
+    {
+        for (int j = InitialColumn - 1; j < InitialColumn + 2; j++)
+        {
+            if (i >= MaxLength || i < 0 || j >= MaxWidth || j < 0)
+            {
+                continue;
+            }
+            checkCoord(PossibleMoves, j, i, Color, BoardState);
+        }
+    }
     return PossibleMoves;
 }

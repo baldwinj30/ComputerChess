@@ -49,6 +49,9 @@ class Piece
     getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
                         int MaxWidth, int MaxLength) const;
 
+    bool
+    checkThreats();
+
     friend
     std::ostream& operator<<(std::ostream & OutputStream, const Piece &PrintPiece);
 

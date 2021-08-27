@@ -1,7 +1,43 @@
 #include "pieces/Piece.h"
 #include "pieces/PieceUtils.h"
+#include "Board.h"
 
 #include <string>
+
+
+bool
+Piece::checkThreats()
+{
+    std::shared_ptr<Board> BoardInstance = Board::instance();
+    std::vector<std::pair<int, int>> AllEnemyMoves;
+    std::set<Piece> OpposingPieces;
+    std::pair<int, int> SpotToCheck(Column, Row);
+
+    if (Color)
+    {
+        OpposingPieces = BoardInstance->BlackPieces;
+    }
+    else
+    {
+        OpposingPieces = BoardInstance->WhitePieces;
+    }
+    for (auto Iterator = OpposingPieces.begin(); Iterator != OpposingPieces.end();
+        Iterator++)
+    {
+        std::vector<std::pair<int, int>> Moves = Iterator->getPossibleMoves(BoardInstance->BoardState, 
+            BoardInstance->Width, BoardInstance->Length);
+        AllEnemyMoves.insert(AllEnemyMoves.end(), Moves.begin(), Moves.end());
+    }
+    for (unsigned i = 0; i < AllEnemyMoves.size(); i++)
+    {
+        if (SpotToCheck == AllEnemyMoves[i])
+        {
+            return true;
+        }
+    }
+    return false;
+    
+}
 
 std::ostream &
 operator<<(std::ostream & OutputStream, const Piece &PrintPiece)
@@ -54,6 +90,8 @@ Piece::getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
             break;
         case PieceType::Knight: PossibleMoves = possibleKnightMoves(*this, BoardState, MaxWidth, MaxLength);
             break;
+        case PieceType::King: PossibleMoves = possibleKingMoves(*this, BoardState, MaxWidth, MaxLength);
+            break;
         default:
             break;
     }
@@ -63,7 +101,7 @@ Piece::getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
 bool 
 Piece::operator<(const Piece &RHS) const
 {
-    /* White is greater than Black */
+    /* White is arbitrarily greater than Black */
     if (Color < RHS.Color)
     {
         return true;

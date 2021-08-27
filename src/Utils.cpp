@@ -2,7 +2,6 @@
 
 #include "Utils.h"
 
-
 std::vector<Piece>
 getPieces(std::set<Piece> Pieces, Piece &King)
 {

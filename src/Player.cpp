@@ -27,14 +27,6 @@ Player::makeRandomMove()
         OpposingPieces = BoardInstance->WhitePieces;
     }
 
-    /* Get all possible opposing moves to check the safety of the King */
-    for (auto Iterator = OpposingPieces.begin(); Iterator != OpposingPieces.end();
-        Iterator++)
-    {
-        std::vector<std::pair<int, int>> Moves = Iterator->getPossibleMoves(BoardInstance->BoardState, 
-            BoardInstance->Width, BoardInstance->Length);
-    }
-
     std::random_shuffle(ColorPieces.begin(), ColorPieces.end());
     TotalPieces = ColorPieces.size();
     Idx = getRandBelow(TotalPieces);
