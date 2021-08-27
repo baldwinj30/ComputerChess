@@ -8,6 +8,7 @@ bool
 Player::makeRandomMove()
 {
     std::vector<Piece> ColorPieces;
+    std::set<Piece> OpposingPieces;
     std::vector<std::pair<int, int>> PossibleMoves;
     std::pair<int, int> TheMove;
     Piece King;
@@ -18,13 +19,23 @@ Player::makeRandomMove()
     if (Color)
     {
         ColorPieces = getPieces(BoardInstance->WhitePieces, King);
+        OpposingPieces = BoardInstance->BlackPieces;
     }
     else
     {
         ColorPieces = getPieces(BoardInstance->BlackPieces, King);
+        OpposingPieces = BoardInstance->WhitePieces;
     }
-    std::random_shuffle(ColorPieces.begin(), ColorPieces.end());
 
+    /* Get all possible opposing moves to check the safety of the King */
+    for (auto Iterator = OpposingPieces.begin(); Iterator != OpposingPieces.end();
+        Iterator++)
+    {
+        std::vector<std::pair<int, int>> Moves = Iterator->getPossibleMoves(BoardInstance->BoardState, 
+            BoardInstance->Width, BoardInstance->Length);
+    }
+
+    std::random_shuffle(ColorPieces.begin(), ColorPieces.end());
     TotalPieces = ColorPieces.size();
     Idx = getRandBelow(TotalPieces);
     /* Loop through until we find a move or we have tried all

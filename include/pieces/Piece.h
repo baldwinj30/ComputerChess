@@ -47,7 +47,7 @@ class Piece
 
     std::vector<std::pair<int, int>>
     getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
-                        int MaxWidth, int MaxLength);
+                        int MaxWidth, int MaxLength) const;
 
     friend
     std::ostream& operator<<(std::ostream & OutputStream, const Piece &PrintPiece);

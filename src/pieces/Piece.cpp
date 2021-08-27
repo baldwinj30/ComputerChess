@@ -39,7 +39,7 @@ operator<<(std::ostream & OutputStream, const Piece &PrintPiece)
 
 std::vector<std::pair<int, int>>
 Piece::getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
-                    int MaxWidth, int MaxLength)
+                    int MaxWidth, int MaxLength) const
 {
     std::vector<std::pair<int, int>> PossibleMoves;
     switch (PieceLabel)
