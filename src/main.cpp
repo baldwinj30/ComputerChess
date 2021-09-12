@@ -1,5 +1,4 @@
 #include <iostream>
-#include <memory>
 #include <cstdlib>
 #include <ctime>
 
@@ -31,10 +30,10 @@ int main(int argc, char * argv[])
     std::srand(seed);
     int TurnCount = 0;
     bool GameOver = false;
-    std::shared_ptr<Board> GameBoard = Board::instance();
-    GameBoard->createBoard(8, 8);
-    Player WhitePlayer = Player(true);
-    Player BlackPlayer = Player(false);
+    Board GameBoard = Board();
+    GameBoard.createBoard(8, 8);
+    Player WhitePlayer = Player(true, GameBoard);
+    Player BlackPlayer = Player(false, GameBoard);
 
     while (!GameOver)
     {
@@ -43,14 +42,14 @@ int main(int argc, char * argv[])
             std::cout << "Stalemate, White can't move\n";
             break;
         }
-        GameBoard->printBoard();
+        GameBoard.printBoard();
         std::cout << "**********\n";
         if (!BlackPlayer.makeRandomMove())
         {
             std::cout << "Stalemate, Black can't move\n";
             break;
         }
-        GameBoard->printBoard();
+        GameBoard.printBoard();
         std::cout << "**********\n";
         std::cout << "++++++++++\n";
         TurnCount++;

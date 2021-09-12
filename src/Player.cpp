@@ -18,13 +18,13 @@ Player::makeRandomMove()
     
     if (Color)
     {
-        ColorPieces = getPieces(BoardInstance->WhitePieces, King);
-        OpposingPieces = BoardInstance->BlackPieces;
+        ColorPieces = getPieces(BoardReference.WhitePieces, King);
+        OpposingPieces = BoardReference.BlackPieces;
     }
     else
     {
-        ColorPieces = getPieces(BoardInstance->BlackPieces, King);
-        OpposingPieces = BoardInstance->WhitePieces;
+        ColorPieces = getPieces(BoardReference.BlackPieces, King);
+        OpposingPieces = BoardReference.WhitePieces;
     }
 
     std::random_shuffle(ColorPieces.begin(), ColorPieces.end());
@@ -36,8 +36,8 @@ Player::makeRandomMove()
     while (PossibleMoves.empty() && Idx < 2*TotalPieces)
     {
         MovePiece = ColorPieces[Idx % TotalPieces];
-        PossibleMoves = MovePiece.getPossibleMoves(BoardInstance->BoardState, 
-                BoardInstance->Width, BoardInstance->Length);
+        PossibleMoves = MovePiece.getPossibleMoves(BoardReference.BoardState, 
+                BoardReference.Width, BoardReference.Length);
         Idx++;
     }
 
@@ -50,42 +50,42 @@ Player::makeRandomMove()
     Idx = getRandBelow(PossibleMoves.size());
     TheMove = PossibleMoves[Idx];
     /* Take the opposing piece if applicable. We already checked not to run into our own piece. */
-    Piece OpposingPiece = BoardInstance->BoardState.at(TheMove);
+    Piece OpposingPiece = BoardReference.BoardState.at(TheMove);
     if (OpposingPiece.PieceLabel != PieceType::Empty)
     {
         if (Color)
         {
-            BoardInstance->BlackPieces.erase(OpposingPiece);
+            BoardReference.BlackPieces.erase(OpposingPiece);
         }
         else
         {
-            BoardInstance->WhitePieces.erase(OpposingPiece);
+            BoardReference.WhitePieces.erase(OpposingPiece);
         }
     }
     /* Last color check and update */
     if (Color)
     {
-        BoardInstance->WhitePieces.erase(MovePiece);
+        BoardReference.WhitePieces.erase(MovePiece);
     }
     else
     {
-        BoardInstance->BlackPieces.erase(MovePiece);
+        BoardReference.BlackPieces.erase(MovePiece);
     }
     /* Remove the old position from the board */
-    BoardInstance->BoardState[
+    BoardReference.BoardState[
         std::pair<int, int>(MovePiece.getColumn(), MovePiece.getRow())] = Piece();
     MovePiece.setColumn(TheMove.first);
     MovePiece.setRow(TheMove.second);
     /* Now this is really our last color check and update */
     if (Color)
     {
-        BoardInstance->WhitePieces.insert(MovePiece);
+        BoardReference.WhitePieces.insert(MovePiece);
     }
     else
     {
-        BoardInstance->BlackPieces.insert(MovePiece);
+        BoardReference.BlackPieces.insert(MovePiece);
     }
-    BoardInstance->BoardState[TheMove] = MovePiece;
+    BoardReference.BoardState[TheMove] = MovePiece;
     std::cout << "move: " << MovePiece <<  " to (" << MovePiece.getColumn() << "," << 
         MovePiece.getRow() << ")" << std::endl;
 

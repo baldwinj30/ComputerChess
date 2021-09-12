@@ -10,10 +10,10 @@ class Player
 {
     public:
 
-    Player(bool Color)
+    Player(bool Color, Board &BoardRef) :
+        BoardReference(BoardRef)
     {
         this->Color = Color;
-        BoardInstance = Board::instance();
     }
 
     /**
@@ -27,7 +27,7 @@ class Player
     bool Color;
 
     private:
-    std::shared_ptr<Board> BoardInstance;
+    Board &BoardReference;
 
 };
 

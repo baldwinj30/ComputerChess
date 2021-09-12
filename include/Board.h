@@ -1,7 +1,6 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <memory>
 #include <map>
 #include <set>
 
@@ -13,12 +12,6 @@ class Board
     public:
 
     Board(){};
-
-    static std::shared_ptr<Board>instance()
-    {
-        static std::shared_ptr<Board> BoardInstance {new Board};
-        return BoardInstance;
-    }
 
     bool
     createBoard(int Width, int Length);

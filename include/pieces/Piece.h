@@ -61,8 +61,8 @@ class Piece
      * Find all the current threats to a piece; primarily to be used for determining
      * check and checkmate on the king.
      */
-    bool
-    checkThreats();
+    // bool
+    // checkThreats();
 
     friend
     std::ostream& operator<<(std::ostream & OutputStream, const Piece &PrintPiece);
