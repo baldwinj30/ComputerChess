@@ -18,6 +18,8 @@ make
 
 on initial compile. From then on, you can just run `make`. Run from `build` with `./src/ComputerChess`.
 
+The tests can be run from `./test/board_test`.
+
 ## Expected Output
 
 You should see several consecutive scenes from a chess board print to the terminal. You should be able to visually verify
