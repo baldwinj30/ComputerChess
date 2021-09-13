@@ -3,4 +3,4 @@ add_library(pieces
     PieceUtils.cpp)
 
 target_include_directories(pieces PUBLIC
-    ${CMAKE_SRC_DIR}/include/)
+    ${CMAKE_SOURCE_DIR}/include)

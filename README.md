@@ -4,14 +4,19 @@ Two computers playing chess by making random, and mostly legal, moves.
 
 ## Environment Guidelines
 
-This program was developed and tested on Ubuntu 18.04 and is compiled with g++.
+This program was developed and tested on Ubuntu 18.04 and is compiled with g++. Uses CMake 3.10.
 
 ## Compiling and Running
 
-In the root directory, run `make` to build and `make clean` to clean.
+In the root directory, create a `build` directory. Then, run
 
-Run `./bin/chess` to run the program with a time-based seed; a single integer argument can be passed
-to run the program with a set seed for deterministic output.
+```sh
+cd build
+cmake ../
+make
+```
+
+on initial compile. From then on, you can just run `make`. Run from `build` with `./src/ComputerChess`.
 
 ## Expected Output
 
