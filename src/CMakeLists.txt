@@ -8,3 +8,5 @@ add_executable(ComputerChess
     main.cpp)
 
 target_link_libraries(ComputerChess pieces)
+target_include_directories(ComputerChess PUBLIC
+    ${CMAKE_SOURCE_DIR}/include)
