@@ -8,6 +8,7 @@ bool
 Player::makeRandomMove()
 {
     std::vector<Piece> ColorPieces;
+    std::vector<Piece> MovePieces;
     std::set<Piece> OpposingPieces;
     std::vector<std::pair<int, int>> PossibleMoves;
     std::pair<int, int> TheMove;
@@ -29,16 +30,15 @@ Player::makeRandomMove()
 
     std::random_shuffle(ColorPieces.begin(), ColorPieces.end());
     TotalPieces = ColorPieces.size();
-    Idx = getRandBelow(TotalPieces);
-    /* Loop through until we find a move or we have tried all
-    possible moves. We may try some moves twice, but for
-    this simple application that should be fine. */
-    while (PossibleMoves.empty() && Idx < 2*TotalPieces)
+    /* Loop through until we have all possible moves. */
+    for (int i = 0; i < TotalPieces; i++)
     {
-        MovePiece = ColorPieces[Idx % TotalPieces];
-        PossibleMoves = MovePiece.getPossibleMoves(BoardReference.BoardState, 
+        MovePiece = ColorPieces[i];
+        std::vector<std::pair<int, int>> NewMoves = MovePiece.getPossibleMoves(BoardReference.BoardState, 
                 BoardReference.Width, BoardReference.Length);
-        Idx++;
+        PossibleMoves.insert(PossibleMoves.end(), NewMoves.begin(), NewMoves.end());
+        /* Match this vector with the previous one so that we know which piece is moved. */
+        MovePieces.insert(MovePieces.end(), NewMoves.size(), MovePiece);
     }
 
     /* If there are no possible moves, then we have a stalemate. */
@@ -49,6 +49,7 @@ Player::makeRandomMove()
     /* Otherwise, pick a move and execute it */
     Idx = getRandBelow(PossibleMoves.size());
     TheMove = PossibleMoves[Idx];
+    MovePiece = MovePieces[Idx];
     /* Take the opposing piece if applicable. We already checked not to run into our own piece. */
     Piece OpposingPiece = BoardReference.BoardState.at(TheMove);
     if (OpposingPiece.PieceLabel != PieceType::Empty)

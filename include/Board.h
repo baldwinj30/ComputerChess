@@ -3,6 +3,7 @@
 
 #include <map>
 #include <set>
+#include <sstream>
 
 #include "pieces/Piece.h"
 
@@ -22,11 +23,20 @@ class Board
     void
     printBoard();
 
+    void
+    newTurn(int TurnNumber) { PGNGameRecord << TurnNumber << ". "; }
+
+    void
+    printPGN() { std::cout << PGNGameRecord.str() << "\n"; }
+
     std::map<std::pair<int, int>, Piece> BoardState;
     std::set<Piece> WhitePieces;
     std::set<Piece> BlackPieces;
     int Width;
     int Length;
+
+    private:
+    std::ostringstream PGNGameRecord;
 };
 
 #endif /* BOARD_H */

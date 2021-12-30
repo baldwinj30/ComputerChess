@@ -16,6 +16,16 @@ enum PieceType
     King
 };
 
+std::map<PieceType, std::string> PieceNamesMap {
+    {PieceType::Pawn, ""}, 
+    {PieceType::Knight, "N"}, 
+    {PieceType::Bishop, "B"}, 
+    {PieceType::Rook, "R"}, 
+    {PieceType::Queen, "Q"}, 
+    {PieceType::King, "K"}
+};
+
+
 /**
  * Represents either a chess piece or an empty spot on the board.
  */
@@ -31,6 +41,7 @@ class Piece
         Row = StartRow;
         PieceLabel = Label;
         Color = Team;
+        PGNCode = PieceNamesMap[Label];
     }
 
     int
@@ -77,6 +88,7 @@ class Piece
     int Row;
     int Column;
     bool Color;
+    std::string PGNCode;
 };
 
 #endif /* PIECE_H */

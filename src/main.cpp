@@ -37,6 +37,7 @@ int main(int argc, char * argv[])
 
     while (!GameOver)
     {
+        GameBoard.newTurn(TurnCount + 1);
         if (!WhitePlayer.makeRandomMove())
         {
             std::cout << "Stalemate, White can't move\n";
@@ -56,6 +57,7 @@ int main(int argc, char * argv[])
         if (TurnCount > 50)
         {
             GameOver = true;
+            GameBoard.printPGN();
         }
     }
 
