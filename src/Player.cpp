@@ -89,6 +89,7 @@ Player::makeRandomMove()
     BoardReference.BoardState[TheMove] = MovePiece;
     std::cout << "move: " << MovePiece <<  " to (" << MovePiece.getColumn() << "," << 
         MovePiece.getRow() << ")" << std::endl;
+    BoardReference.recordMove(MovePiece.getPGNCode());
 
     return true;
 }

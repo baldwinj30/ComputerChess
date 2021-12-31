@@ -27,6 +27,12 @@ class Board
     newTurn(int TurnNumber) { PGNGameRecord << TurnNumber << ". "; }
 
     void
+    recordPiece(std::string PieceCode) { PGNGameRecord << PieceCode << " "; }
+
+    void
+    recordCapture() { PGNGameRecord << "x"; }
+
+    void
     printPGN() { std::cout << PGNGameRecord.str() << "\n"; }
 
     std::map<std::pair<int, int>, Piece> BoardState;

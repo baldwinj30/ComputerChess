@@ -16,15 +16,6 @@ enum PieceType
     King
 };
 
-std::map<PieceType, std::string> PieceNamesMap {
-    {PieceType::Pawn, ""}, 
-    {PieceType::Knight, "N"}, 
-    {PieceType::Bishop, "B"}, 
-    {PieceType::Rook, "R"}, 
-    {PieceType::Queen, "Q"}, 
-    {PieceType::King, "K"}
-};
-
 
 /**
  * Represents either a chess piece or an empty spot on the board.
@@ -41,7 +32,6 @@ class Piece
         Row = StartRow;
         PieceLabel = Label;
         Color = Team;
-        PGNCode = PieceNamesMap[Label];
     }
 
     int
@@ -62,7 +52,7 @@ class Piece
     /**
      * Find all the possible moves for the piece at a given board state.
      * 
-     * Return the moves as a vecotr of pairs of final <column, row>.
+     * Return the moves as a vector of pairs of final <column, row>.
      */
     std::vector<std::pair<int, int>>
     getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
@@ -82,13 +72,18 @@ class Piece
 
     bool operator==(const Piece &RHS) const;
 
+    /**
+     * Return the PGN code for this piece.
+     */
+    std::string
+    getPGNCode();
+
     PieceType PieceLabel {PieceType::Empty};
 
     private:
     int Row;
     int Column;
     bool Color;
-    std::string PGNCode;
 };
 
 #endif /* PIECE_H */

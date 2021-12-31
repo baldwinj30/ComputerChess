@@ -152,3 +152,22 @@ Piece::operator==(const Piece &RHS) const
     
     return false;
 }
+
+/**
+ * Map the piece labels to Portable Game Notation (PGN) strings
+ */
+std::map<PieceType, std::string> PGNMap = 
+{
+    {PieceType::Pawn, ""}, 
+    {PieceType::Knight, "N"}, 
+    {PieceType::Bishop, "B"}, 
+    {PieceType::Rook, "R"}, 
+    {PieceType::Queen, "Q"}, 
+    {PieceType::King, "K"}
+};
+
+std::string
+Piece::getPGNCode()
+{
+    return PGNMap[this->PieceLabel];
+}
