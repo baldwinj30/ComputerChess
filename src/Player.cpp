@@ -16,6 +16,7 @@ Player::makeRandomMove()
     Piece MovePiece;
     int Idx;
     unsigned TotalPieces;
+    bool Capture = false;
     
     if (Color)
     {
@@ -62,6 +63,7 @@ Player::makeRandomMove()
         {
             BoardReference.WhitePieces.erase(OpposingPiece);
         }
+        Capture = true;
     }
     /* Last color check and update */
     if (Color)
@@ -89,7 +91,14 @@ Player::makeRandomMove()
     BoardReference.BoardState[TheMove] = MovePiece;
     std::cout << "move: " << MovePiece <<  " to (" << MovePiece.getColumn() << "," << 
         MovePiece.getRow() << ")" << std::endl;
-    BoardReference.recordMove(MovePiece.getPGNCode());
+    
+    /* Perform PGN bookkeeping */
+    BoardReference.recordPiece(MovePiece);
+    if (Capture)
+    {
+        BoardReference.recordCapture();
+    }
+    BoardReference.recordMove(TheMove);
 
     return true;
 }

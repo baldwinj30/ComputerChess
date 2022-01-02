@@ -41,6 +41,10 @@ to represent the type of piece:
 The game currently ends after 50 turns, or after a stalemate whichever occurs first. In the case of a stalemate,
 text will print out indicating which color couldn't legally move, causing the stalemate.
 
+Further, the program currently prints out a copy of the game in PGN format at completion. Not all of the output
+is necessarily valid, but you can copy and paste it to https://chesstempo.com/pgn-viewer/ to check where the invalid
+moves occured and to view the valid moves.
+
 ## Todos
 
 Several rules of chess are still currently missing, and some other nice features could be implemented:
