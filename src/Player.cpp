@@ -74,6 +74,15 @@ Player::makeRandomMove()
     {
         BoardReference.BlackPieces.erase(MovePiece);
     }
+    
+    /* Perform PGN bookkeeping */
+    BoardReference.recordPiece(MovePiece);
+    if (Capture)
+    {
+        BoardReference.recordCapture(MovePiece);
+    }
+    BoardReference.recordMove(TheMove);
+
     /* Remove the old position from the board */
     BoardReference.BoardState[
         std::pair<int, int>(MovePiece.getColumn(), MovePiece.getRow())] = Piece();
@@ -92,13 +101,12 @@ Player::makeRandomMove()
     std::cout << "move: " << MovePiece <<  " to (" << MovePiece.getColumn() << "," << 
         MovePiece.getRow() << ")" << std::endl;
     
-    /* Perform PGN bookkeeping */
-    BoardReference.recordPiece(MovePiece);
-    if (Capture)
+    /* Determine if the opposing king is now in check */
+    if (BoardReference.checkKingInCheck(Color))
     {
-        BoardReference.recordCapture();
+        std::cout << "The king is in check...";
+        return false;
     }
-    BoardReference.recordMove(TheMove);
 
     return true;
 }

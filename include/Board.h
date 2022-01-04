@@ -8,11 +8,22 @@
 #include "pieces/Piece.h"
 
 
+/**
+ * Creates the initial board state, records the game moves, and looks for
+ * check and check-mate.
+ */
 class Board 
 {
     public:
 
     Board(){};
+
+    Board(std::map<std::pair<int, int>, Piece> BoardState) 
+    { 
+        BoardState = BoardState; 
+        Width = 8;
+        Length = 8;
+    }
 
     bool
     createBoard(int Width, int Length);
@@ -22,6 +33,12 @@ class Board
 
     void
     printBoard();
+
+    /**
+     * Check if a king is in check.
+     */
+    bool
+    checkKingInCheck(bool Color);
 
     void
     newTurn(int TurnNumber) { PGNGameRecord << TurnNumber << ". "; }
@@ -33,7 +50,7 @@ class Board
     recordMove(std::pair<int, int> Space) { PGNGameRecord << FileMap[Space.first] << RankMap[Space.second] << ' '; };
 
     void
-    recordCapture() { PGNGameRecord << "x"; }
+    recordCapture(Piece PieceCapturing);
 
     void
     printPGN() { std::cout << PGNGameRecord.str() << "\n"; }

@@ -41,6 +41,7 @@ int main(int argc, char * argv[])
         if (!WhitePlayer.makeRandomMove())
         {
             std::cout << "Stalemate, White can't move\n";
+            GameBoard.printPGN();
             break;
         }
         GameBoard.printBoard();
@@ -48,6 +49,7 @@ int main(int argc, char * argv[])
         if (!BlackPlayer.makeRandomMove())
         {
             std::cout << "Stalemate, Black can't move\n";
+            GameBoard.printPGN();
             break;
         }
         GameBoard.printBoard();

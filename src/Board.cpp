@@ -3,6 +3,42 @@
 #include <iostream>
 
 bool
+Board::checkKingInCheck(bool Color)
+{
+    std::vector<std::pair<int, int>> ThreatMoves;
+    Piece King;
+    for (auto CurrentPiece : BoardState)
+    {
+        /* If the space is empty, then continue on. */
+        if (CurrentPiece.second.PieceLabel == PieceType::Empty)
+        {
+            continue;
+        }
+        /* Gather the potentially threatening moves. */
+        else if (CurrentPiece.second.getColor() != Color)
+        {
+            std::vector<std::pair<int, int>> CurrentPossibleThreats = 
+                CurrentPiece.second.getPossibleMoves(this->BoardState, this->Width, this->Length);
+            ThreatMoves.insert(ThreatMoves.end(), CurrentPossibleThreats.begin(), CurrentPossibleThreats.end());
+        }
+        /* Find the king. */
+        else if (CurrentPiece.second.PieceLabel == PieceType::King)
+        {
+            King = CurrentPiece.second;
+        }
+    }
+    /* Now check if any threatening moves could get the king. */
+    for (auto Move : ThreatMoves)
+    {
+        if (King.getColumn() == Move.first && King.getRow() == Move.second)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool
 Board::createBoard(int Width, int Length)
 {
     /* Define the initial columns for each piece. */
@@ -93,4 +129,15 @@ Board::printBoard()
         }
         std::cout << std::endl;
     }
+}
+
+
+void
+Board::recordCapture(Piece PieceCapturing)
+{
+    if (PieceCapturing.PieceLabel == PieceType::Pawn)
+    {
+        PGNGameRecord << FileMap[PieceCapturing.getColumn()];
+    }
+    PGNGameRecord << "x";
 }
