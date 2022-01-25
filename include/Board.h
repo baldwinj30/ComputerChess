@@ -25,9 +25,17 @@ class Board
         Length = 8;
     }
 
+    /**
+     * Build a chess board with all pieces at their initial positions.
+     * This initializes the BoardState public variable with all the pieces,
+     * and returns true on success.
+     */
     bool
     createBoard(int Width, int Length);
 
+    /** 
+     * Adds a piece to the BoardState at the given position.
+     */
     bool
     createPiece(int X, int Y, PieceType Type, bool Color);
 
@@ -35,20 +43,32 @@ class Board
     printBoard();
 
     /**
-     * Check if a king is in check.
+     * Check if the king of the given color is in check.
      */
     bool
     checkKingInCheck(bool Color);
 
+    /**
+     * Create a new turn in the PGN record.
+     */
     void
     newTurn(int TurnNumber) { PGNGameRecord << TurnNumber << ". "; }
 
+    /**
+     * Record a piece that made a move in the PGN record.
+     */
     void
     recordPiece(Piece RecordPiece) { PGNGameRecord << RecordPiece.getPGNCode(); }
 
+    /**
+     * Record the new position of a piece in the PGN record.
+     */
     void
     recordMove(std::pair<int, int> Space) { PGNGameRecord << FileMap[Space.first] << RankMap[Space.second] << ' '; };
 
+    /**
+     * Note a capture in the PGN record; this requires special notation for pawns vs. other pieces.
+     */
     void
     recordCapture(Piece PieceCapturing);
 

@@ -5,9 +5,14 @@
 #include "Player.h"
 #include "Board.h"
 
+
+/**
+ * Runs a basic chess program.
+ */
 int main(int argc, char * argv[])
 {
     unsigned int seed;
+
     /* Simple argument parsing. */
     if (argc > 2)
     {
@@ -27,6 +32,7 @@ int main(int argc, char * argv[])
         seed = std::time(nullptr);
     }
 
+    /* Main program code. */
     std::srand(seed);
     int TurnCount = 0;
     bool GameOver = false;

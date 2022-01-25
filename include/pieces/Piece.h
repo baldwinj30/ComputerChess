@@ -51,6 +51,11 @@ class Piece
 
     /**
      * Find all the possible moves for the piece at a given board state.
+     * This function is simply a switch statement passing the inputs through to the 
+     * appropriate checks of each piece.
+     * The BoardState and integer arguments contain information about the board.
+     * The TestForCheck argument is used to avoid unwanted recursion when performing
+     * post-move tests for check.
      * 
      * Return the moves as a vector of pairs of final <column, row>.
      */

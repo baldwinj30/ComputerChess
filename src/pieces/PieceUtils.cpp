@@ -1,7 +1,8 @@
 #include "pieces/PieceUtils.h"
 
 /**
- * Helper function to check a coordinate and determine if the path is blocked or if the king will be placed in danger.
+ * Helper function to check a coordinate and determine if the space is blocked or if the king will be placed in danger.
+ * The TestForCheck argument is passed all the way through to this function to avoid recursion.
  */
 bool
 checkCoord(std::vector<std::pair<int, int>> &PossibleMoves, int Column, int Row, bool Color,
@@ -9,11 +10,12 @@ checkCoord(std::vector<std::pair<int, int>> &PossibleMoves, int Column, int Row,
 {
     std::pair<int, int> PotentialCoord(Column, Row);
     bool kingInCheck = false;
+    /* Do we need to determine if this move would put our own king in check? */
     if (TestForCheck)
     {
         /* First, check if this move either puts the king in check or leaves the king in check. */
         std::map<std::pair<int, int>, Piece> TestBoardState = BoardState;
-        Board TestBoard(TestBoardState);  // Create  a test board that we will abuse to check for threats to the king.
+        Board TestBoard(TestBoardState);  // Create a test board that we will abuse to check for threats to the king.
         std::pair<int, int> OldCoord(CurrentPiece.getColumn(), CurrentPiece.getRow());
         CurrentPiece.setColumn(Column);
         CurrentPiece.setRow(Row);
