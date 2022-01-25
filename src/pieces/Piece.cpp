@@ -75,22 +75,22 @@ operator<<(std::ostream & OutputStream, const Piece &PrintPiece)
 
 std::vector<std::pair<int, int>>
 Piece::getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
-                    int MaxWidth, int MaxLength) const
+                    int MaxWidth, int MaxLength, bool TestForCheck) const
 {
     std::vector<std::pair<int, int>> PossibleMoves;
     switch (PieceLabel)
     {
-        case PieceType::Pawn: PossibleMoves = possiblePawnMoves(*this, BoardState, MaxWidth, MaxLength);
+        case PieceType::Pawn: PossibleMoves = possiblePawnMoves(*this, BoardState, MaxWidth, MaxLength, TestForCheck);
             break;
-        case PieceType::Rook: PossibleMoves = possibleRookMoves(*this, BoardState, MaxWidth, MaxLength);
+        case PieceType::Rook: PossibleMoves = possibleRookMoves(*this, BoardState, MaxWidth, MaxLength, TestForCheck);
             break;
-        case PieceType::Bishop: PossibleMoves = possibleBishopMoves(*this, BoardState, MaxWidth, MaxLength);
+        case PieceType::Bishop: PossibleMoves = possibleBishopMoves(*this, BoardState, MaxWidth, MaxLength, TestForCheck);
             break;
-        case PieceType::Queen: PossibleMoves = possibleQueenMoves(*this, BoardState, MaxWidth, MaxLength);
+        case PieceType::Queen: PossibleMoves = possibleQueenMoves(*this, BoardState, MaxWidth, MaxLength, TestForCheck);
             break;
-        case PieceType::Knight: PossibleMoves = possibleKnightMoves(*this, BoardState, MaxWidth, MaxLength);
+        case PieceType::Knight: PossibleMoves = possibleKnightMoves(*this, BoardState, MaxWidth, MaxLength, TestForCheck);
             break;
-        case PieceType::King: PossibleMoves = possibleKingMoves(*this, BoardState, MaxWidth, MaxLength);
+        case PieceType::King: PossibleMoves = possibleKingMoves(*this, BoardState, MaxWidth, MaxLength, TestForCheck);
             break;
         default:
             break;

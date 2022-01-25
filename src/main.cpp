@@ -41,27 +41,28 @@ int main(int argc, char * argv[])
         if (!WhitePlayer.makeRandomMove())
         {
             std::cout << "Stalemate, White can't move\n";
-            GameBoard.printPGN();
             break;
         }
-        GameBoard.printBoard();
-        std::cout << "**********\n";
+        // GameBoard.printBoard();
+        // std::cout << "**********\n";
         if (!BlackPlayer.makeRandomMove())
         {
             std::cout << "Stalemate, Black can't move\n";
-            GameBoard.printPGN();
             break;
         }
-        GameBoard.printBoard();
-        std::cout << "**********\n";
-        std::cout << "++++++++++\n";
+        // GameBoard.printBoard();
+        // std::cout << "**********\n";
+        // std::cout << "++++++++++\n";
         TurnCount++;
         if (TurnCount > 50)
         {
             GameOver = true;
-            GameBoard.printPGN();
         }
     }
+
+    GameBoard.printBoard();
+    GameBoard.printPGN();
+    std::cout << "Game seed: " << seed << "\n";
 
     return 0;
 }

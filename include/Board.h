@@ -20,7 +20,7 @@ class Board
 
     Board(std::map<std::pair<int, int>, Piece> BoardState) 
     { 
-        BoardState = BoardState; 
+        this->BoardState = BoardState; 
         Width = 8;
         Length = 8;
     }

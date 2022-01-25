@@ -13,37 +13,37 @@
  * No other pieces have a directive to only move in one direction.
  */
 std::vector<std::pair<int, int>>
-possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
+possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck);
 
 /**
  * Rooks can move up and down single rows and columns until they run into a piece.
  */
 std::vector<std::pair<int, int>>
-possibleRookMoves(Piece Rook, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
+possibleRookMoves(Piece Rook, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck);
 
 /**
  * Bishops can move diagonally in any direction until they run into a piece.
  */
 std::vector<std::pair<int, int>>
-possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
+possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck);
 
 /**
  * Queens are simply the combination of bishops and rooks.
  */
 std::vector<std::pair<int, int>>
-possibleQueenMoves(Piece Queen, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
+possibleQueenMoves(Piece Queen, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck);
 
 /**
  * Knights can move in an L in any direction and they may jump pieces, so they only care about
  * their final landing spot.
  */
 std::vector<std::pair<int, int>>
-possibleKnightMoves(Piece Knight, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
+possibleKnightMoves(Piece Knight, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck);
 
 /**
  * Lastly the king, who can move one square in any direction as long as he does not move into threats.
  */
 std::vector<std::pair<int, int>>
-possibleKingMoves(Piece King, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength);
+possibleKingMoves(Piece King, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck);
 
 #endif

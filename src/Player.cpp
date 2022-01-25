@@ -36,7 +36,7 @@ Player::makeRandomMove()
     {
         MovePiece = ColorPieces[i];
         std::vector<std::pair<int, int>> NewMoves = MovePiece.getPossibleMoves(BoardReference.BoardState, 
-                BoardReference.Width, BoardReference.Length);
+                BoardReference.Width, BoardReference.Length, true);
         PossibleMoves.insert(PossibleMoves.end(), NewMoves.begin(), NewMoves.end());
         /* Match this vector with the previous one so that we know which piece is moved. */
         MovePieces.insert(MovePieces.end(), NewMoves.size(), MovePiece);
@@ -51,6 +51,7 @@ Player::makeRandomMove()
     Idx = getRandBelow(PossibleMoves.size());
     TheMove = PossibleMoves[Idx];
     MovePiece = MovePieces[Idx];
+
     /* Take the opposing piece if applicable. We already checked not to run into our own piece. */
     Piece OpposingPiece = BoardReference.BoardState.at(TheMove);
     if (OpposingPiece.PieceLabel != PieceType::Empty)
@@ -65,6 +66,7 @@ Player::makeRandomMove()
         }
         Capture = true;
     }
+
     /* Last color check and update */
     if (Color)
     {
@@ -98,8 +100,8 @@ Player::makeRandomMove()
         BoardReference.BlackPieces.insert(MovePiece);
     }
     BoardReference.BoardState[TheMove] = MovePiece;
-    std::cout << "move: " << MovePiece <<  " to (" << MovePiece.getColumn() << "," << 
-        MovePiece.getRow() << ")" << std::endl;
+    // std::cout << "move: " << MovePiece <<  " to (" << MovePiece.getColumn() << "," << 
+    //     MovePiece.getRow() << ")" << std::endl;
     
     /* Determine if the opposing king is now in check */
     if (BoardReference.checkKingInCheck(Color))

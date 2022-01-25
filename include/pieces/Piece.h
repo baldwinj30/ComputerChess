@@ -56,7 +56,7 @@ class Piece
      */
     std::vector<std::pair<int, int>>
     getPossibleMoves (const std::map<std::pair<int, int>, Piece> &BoardState,
-                        int MaxWidth, int MaxLength) const;
+                        int MaxWidth, int MaxLength, bool TestForCheck) const;
 
     /**
      * Find all the current threats to a piece; primarily to be used for determining

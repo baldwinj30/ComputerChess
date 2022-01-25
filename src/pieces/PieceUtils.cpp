@@ -1,27 +1,25 @@
 #include "pieces/PieceUtils.h"
 
 /**
- * Helper function to check a coordinate and determine if the path is blocked.
+ * Helper function to check a coordinate and determine if the path is blocked or if the king will be placed in danger.
  */
 bool
 checkCoord(std::vector<std::pair<int, int>> &PossibleMoves, int Column, int Row, bool Color,
-            const std::map<std::pair<int, int>, Piece> &BoardState, Piece CurrentPiece)
+            std::map<std::pair<int, int>, Piece> BoardState, Piece CurrentPiece, bool TestForCheck)
 {
     std::pair<int, int> PotentialCoord(Column, Row);
-    bool kingInCheck;
-    /* First, check if this move either puts the king in check or leaves the king in check. */
-    std::map<std::pair<int, int>, Piece> TestBoardState(BoardState);
-    Board TestBoard = Board(TestBoardState);  // Create  a test board that we will abuse to check for threats to the king.
-    std::pair<int, int> OldCoord(CurrentPiece.getColumn(), CurrentPiece.getRow());
-    CurrentPiece.setColumn(Column);
-    CurrentPiece.setRow(Row);
-    // TestBoard.BoardState[PotentialCoord] = CurrentPiece;
-    // TestBoard.BoardState[OldCoord] = Piece();
-    kingInCheck = TestBoard.checkKingInCheck(Color);
-    TestBoard.printBoard();
-    if (kingInCheck)
+    bool kingInCheck = false;
+    if (TestForCheck)
     {
-        std::cout << "found king in check\n";
+        /* First, check if this move either puts the king in check or leaves the king in check. */
+        std::map<std::pair<int, int>, Piece> TestBoardState = BoardState;
+        Board TestBoard(TestBoardState);  // Create  a test board that we will abuse to check for threats to the king.
+        std::pair<int, int> OldCoord(CurrentPiece.getColumn(), CurrentPiece.getRow());
+        CurrentPiece.setColumn(Column);
+        CurrentPiece.setRow(Row);
+        TestBoard.BoardState[PotentialCoord] = CurrentPiece;
+        TestBoard.BoardState[OldCoord] = Piece();
+        kingInCheck = TestBoard.checkKingInCheck(Color);
     }
 
     /* Then, check if there is another piece in the way. */
@@ -49,7 +47,7 @@ checkCoord(std::vector<std::pair<int, int>> &PossibleMoves, int Column, int Row,
 }
 
 std::vector<std::pair<int, int>>
-possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
+possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck)
 {
     std::vector<std::pair<int, int>> ValidPossibleMoves;
     std::pair<int, int> OneForward;
@@ -119,7 +117,7 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
 }
 
 std::vector<std::pair<int, int>>
-possibleRookMoves(Piece Rook, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
+possibleRookMoves(Piece Rook, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck)
 {
     std::vector<std::pair<int, int>> PossibleMoves;
     int InitialRow = Rook.getRow();
@@ -128,28 +126,28 @@ possibleRookMoves(Piece Rook, const std::map<std::pair<int, int>, Piece> &BoardS
 
     for (int i = InitialRow + 1; i < MaxLength; i++)
     {
-        if (!checkCoord(PossibleMoves, InitialColumn, i, Color, BoardState, Rook))
+        if (!checkCoord(PossibleMoves, InitialColumn, i, Color, BoardState, Rook, TestForCheck))
         {
             break;
         }
     }
     for (int i = InitialRow - 1; i >= 0; i--)
     {
-        if (!checkCoord(PossibleMoves, InitialColumn, i, Color, BoardState, Rook))
+        if (!checkCoord(PossibleMoves, InitialColumn, i, Color, BoardState, Rook, TestForCheck))
         {
             break;
         }
     }
     for (int i = InitialColumn + 1; i < MaxWidth; i++)
     {
-        if (!checkCoord(PossibleMoves, i, InitialRow, Color, BoardState, Rook))
+        if (!checkCoord(PossibleMoves, i, InitialRow, Color, BoardState, Rook, TestForCheck))
         {
             break;
         }
     }
     for (int i = InitialColumn - 1; i >= 0; i--)
     {
-        if (!checkCoord(PossibleMoves, i, InitialRow, Color, BoardState, Rook))
+        if (!checkCoord(PossibleMoves, i, InitialRow, Color, BoardState, Rook, TestForCheck))
         {
             break;
         }
@@ -159,7 +157,7 @@ possibleRookMoves(Piece Rook, const std::map<std::pair<int, int>, Piece> &BoardS
 }
 
 std::vector<std::pair<int, int>>
-possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
+possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck)
 {
     std::vector<std::pair<int, int>> PossibleMoves;
     int InitialRow = Bishop.getRow();
@@ -170,7 +168,7 @@ possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &Bo
     int j = InitialColumn + 1;
     while (i < MaxWidth && j < MaxLength)
     {
-        if (!checkCoord(PossibleMoves, j, i, Color, BoardState, Bishop))
+        if (!checkCoord(PossibleMoves, j, i, Color, BoardState, Bishop, TestForCheck))
         {
             break;
         }
@@ -182,7 +180,7 @@ possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &Bo
     j = InitialColumn - 1;
     while (i < MaxWidth && j >= 0)
     {
-        if (!checkCoord(PossibleMoves, j, i, Color, BoardState, Bishop))
+        if (!checkCoord(PossibleMoves, j, i, Color, BoardState, Bishop, TestForCheck))
         {
             break;
         }
@@ -194,7 +192,7 @@ possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &Bo
     j = InitialColumn + 1;
     while (i >= 0 && j < MaxLength)
     {
-        if (!checkCoord(PossibleMoves, j, i, Color, BoardState, Bishop))
+        if (!checkCoord(PossibleMoves, j, i, Color, BoardState, Bishop, TestForCheck))
         {
             break;
         }
@@ -206,7 +204,7 @@ possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &Bo
     j = InitialColumn - 1;
     while (i >= 0 && j >= 0)
     {
-        if (!checkCoord(PossibleMoves, j, i, Color, BoardState, Bishop))
+        if (!checkCoord(PossibleMoves, j, i, Color, BoardState, Bishop, TestForCheck))
         {
             break;
         }
@@ -218,16 +216,16 @@ possibleBishopMoves(Piece Bishop, const std::map<std::pair<int, int>, Piece> &Bo
 }
 
 std::vector<std::pair<int, int>>
-possibleQueenMoves(Piece Queen, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
+possibleQueenMoves(Piece Queen, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck)
 {
-    std::vector<std::pair<int, int>> PossibleMovesRook = possibleRookMoves(Queen, BoardState, MaxWidth, MaxLength);
-    std::vector<std::pair<int, int>> PossibleMovesBishop = possibleBishopMoves(Queen, BoardState, MaxWidth, MaxLength);
+    std::vector<std::pair<int, int>> PossibleMovesRook = possibleRookMoves(Queen, BoardState, MaxWidth, MaxLength, TestForCheck);
+    std::vector<std::pair<int, int>> PossibleMovesBishop = possibleBishopMoves(Queen, BoardState, MaxWidth, MaxLength, TestForCheck);
     PossibleMovesRook.insert(PossibleMovesRook.end(), PossibleMovesBishop.begin(), PossibleMovesBishop.end());
     return PossibleMovesRook;
 }
 
 std::vector<std::pair<int, int>>
-possibleKnightMoves(Piece Knight, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
+possibleKnightMoves(Piece Knight, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck)
 {
     std::vector<std::pair<int, int>> PossibleMoves;
     int InitialRow = Knight.getRow();
@@ -244,63 +242,63 @@ possibleKnightMoves(Piece Knight, const std::map<std::pair<int, int>, Piece> &Bo
     PossibleCoord = std::pair<int, int>(j, i);
     if (BoardState.count(PossibleCoord) > 0)
     {
-        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight);
+        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight, TestForCheck);
     }
     i = InitialRow + 2;
     j = InitialColumn - 1;
     PossibleCoord = std::pair<int, int>(j, i);
     if (BoardState.count(PossibleCoord) > 0)
     {
-        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight);
+        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight, TestForCheck);
     }
     i = InitialRow - 2;
     j = InitialColumn + 1;
     PossibleCoord = std::pair<int, int>(j, i);
     if (BoardState.count(PossibleCoord) > 0)
     {
-        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight);
+        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight, TestForCheck);
     }
     i = InitialRow - 2;
     j = InitialColumn - 1;
     PossibleCoord = std::pair<int, int>(j, i);
     if (BoardState.count(PossibleCoord) > 0)
     {
-        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight);
+        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight, TestForCheck);
     }
     i = InitialRow + 1;
     j = InitialColumn + 2;
     PossibleCoord = std::pair<int, int>(j, i);
     if (BoardState.count(PossibleCoord) > 0)
     {
-        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight);
+        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight, TestForCheck);
     }
     i = InitialRow + 1;
     j = InitialColumn - 2;
     PossibleCoord = std::pair<int, int>(j, i);
     if (BoardState.count(PossibleCoord) > 0)
     {
-        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight);
+        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight, TestForCheck);
     }
     i = InitialRow - 1;
     j = InitialColumn + 2;
     PossibleCoord = std::pair<int, int>(j, i);
     if (BoardState.count(PossibleCoord) > 0)
     {
-        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight);
+        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight, TestForCheck);
     }
     i = InitialRow - 1;
     j = InitialColumn - 2;
     PossibleCoord = std::pair<int, int>(j, i);
     if (BoardState.count(PossibleCoord) > 0)
     {
-        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight);
+        checkCoord(PossibleMoves, j, i, Color, BoardState, Knight, TestForCheck);
     }
 
     return PossibleMoves;
 }
 
 std::vector<std::pair<int, int>>
-possibleKingMoves(Piece King, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength)
+possibleKingMoves(Piece King, const std::map<std::pair<int, int>, Piece> &BoardState, int MaxWidth, int MaxLength, bool TestForCheck)
 {
     std::vector<std::pair<int, int>> PossibleMoves;
     int InitialRow = King.getRow();
@@ -315,7 +313,7 @@ possibleKingMoves(Piece King, const std::map<std::pair<int, int>, Piece> &BoardS
             {
                 continue;
             }
-            checkCoord(PossibleMoves, j, i, Color, BoardState, King);
+            checkCoord(PossibleMoves, j, i, Color, BoardState, King, TestForCheck);
         }
     }
     return PossibleMoves;

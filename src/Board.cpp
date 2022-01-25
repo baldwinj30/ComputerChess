@@ -18,7 +18,7 @@ Board::checkKingInCheck(bool Color)
         else if (CurrentPiece.second.getColor() != Color)
         {
             std::vector<std::pair<int, int>> CurrentPossibleThreats = 
-                CurrentPiece.second.getPossibleMoves(this->BoardState, this->Width, this->Length);
+                CurrentPiece.second.getPossibleMoves(this->BoardState, this->Width, this->Length, false);
             ThreatMoves.insert(ThreatMoves.end(), CurrentPossibleThreats.begin(), CurrentPossibleThreats.end());
         }
         /* Find the king. */
