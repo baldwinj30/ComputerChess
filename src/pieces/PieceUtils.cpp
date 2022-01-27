@@ -3,6 +3,8 @@
 /**
  * Helper function to check a coordinate and determine if the space is blocked or if the king will be placed in danger.
  * The TestForCheck argument is passed all the way through to this function to avoid recursion.
+ * This function adds the coordinate to the vector PossibleMoves if it is found to be valid, and returns
+ * true or false depending on whether or not the landing spot is empty.
  */
 bool
 checkCoord(std::vector<std::pair<int, int>> &PossibleMoves, int Column, int Row, bool Color,
@@ -62,7 +64,7 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
     bool PathBlocked;
 
     /* Set our directional moves based on color */
-    if (Pawn.getColor())
+    if (Color)
     {
         OneForward = std::pair<int, int>(InitialColumn, InitialRow - 1);
         TwoForward = std::pair<int, int>(InitialColumn, InitialRow - 2);
@@ -82,8 +84,8 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
     if (PieceOneForward != BoardState.end() &&
         PieceOneForward->second.PieceLabel == PieceType::Empty)
     {
-        PathBlocked = true;
-        ValidPossibleMoves.push_back(OneForward);
+        PathBlocked = false;
+        checkCoord(ValidPossibleMoves, OneForward.first, OneForward.second, Color, BoardState, Pawn, TestForCheck);
     }
     else
     {
@@ -97,13 +99,13 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
         PieceDiagonalLeft->second.getColor() != Color && 
         PieceDiagonalLeft->second.PieceLabel != PieceType::Empty)
     {
-        ValidPossibleMoves.push_back(DiagonalLeft);
+        checkCoord(ValidPossibleMoves, DiagonalLeft.first, DiagonalLeft.second, Color, BoardState, Pawn, TestForCheck);
     }    
     if (PieceDiagonalRight != BoardState.end() &&
         PieceDiagonalRight->second.getColor() != Color && 
         PieceDiagonalRight->second.PieceLabel != PieceType::Empty)
     {
-        ValidPossibleMoves.push_back(DiagonalRight);
+        checkCoord(ValidPossibleMoves, DiagonalRight.first, DiagonalRight.second, Color, BoardState, Pawn, TestForCheck);
     }
 
     /* Finally, if there is no piece in the way and we are at the starting position,
@@ -112,7 +114,7 @@ possiblePawnMoves(Piece Pawn, const std::map<std::pair<int, int>, Piece> &BoardS
         ((Color && InitialRow == MaxLength - 2) || (!Color && InitialRow == 1)) &&
         BoardState.at(TwoForward).PieceLabel == PieceType::Empty)
     {
-        ValidPossibleMoves.push_back(TwoForward);
+        checkCoord(ValidPossibleMoves, TwoForward.first, TwoForward.second, Color, BoardState, Pawn, TestForCheck);
     }
 
     return ValidPossibleMoves;
