@@ -55,10 +55,10 @@ class Board
     newTurn(int TurnNumber) { PGNGameRecord << TurnNumber << ". "; }
 
     /**
-     * Record a piece that made a move in the PGN record.
+     * Record a piece that made a move in the PGN record, along with it's original position.
      */
     void
-    recordPiece(Piece RecordPiece) { PGNGameRecord << RecordPiece.getPGNCode(); }
+    recordPiece(Piece RecordPiece, std::pair<int, int> Space) { PGNGameRecord << RecordPiece.getPGNCode() << FileMap[Space.first] << RankMap[Space.second]; }
 
     /**
      * Record the new position of a piece in the PGN record.

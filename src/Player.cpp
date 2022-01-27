@@ -12,6 +12,7 @@ Player::makeRandomMove()
     std::set<Piece> OpposingPieces;
     std::vector<std::pair<int, int>> PossibleMoves;
     std::pair<int, int> TheMove;
+    std::pair<int, int> OldSpace;
     Piece King;
     Piece MovePiece;
     int Idx;
@@ -51,6 +52,7 @@ Player::makeRandomMove()
     Idx = getRandBelow(PossibleMoves.size());
     TheMove = PossibleMoves[Idx];
     MovePiece = MovePieces[Idx];
+    OldSpace = std::pair<int, int>(MovePiece.getColumn(), MovePiece.getRow());
 
     /* Take the opposing piece if applicable. We already checked not to run into our own piece. */
     Piece OpposingPiece = BoardReference.BoardState.at(TheMove);
@@ -78,7 +80,7 @@ Player::makeRandomMove()
     }
     
     /* Perform PGN bookkeeping */
-    BoardReference.recordPiece(MovePiece);
+    BoardReference.recordPiece(MovePiece, OldSpace);
     if (Capture)
     {
         BoardReference.recordCapture(MovePiece);
