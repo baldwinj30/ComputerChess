@@ -5,40 +5,6 @@
 #include <string>
 
 
-// bool
-// Piece::checkThreats()
-// {
-//     std::shared_ptr<Board> BoardInstance = Board::instance();
-//     std::vector<std::pair<int, int>> AllEnemyMoves;
-//     std::set<Piece> OpposingPieces;
-//     std::pair<int, int> SpotToCheck(Column, Row);
-
-//     if (Color)
-//     {
-//         OpposingPieces = BoardInstance->BlackPieces;
-//     }
-//     else
-//     {
-//         OpposingPieces = BoardInstance->WhitePieces;
-//     }
-//     for (auto Iterator = OpposingPieces.begin(); Iterator != OpposingPieces.end();
-//         Iterator++)
-//     {
-//         std::vector<std::pair<int, int>> Moves = Iterator->getPossibleMoves(BoardInstance->BoardState, 
-//             BoardInstance->Width, BoardInstance->Length);
-//         AllEnemyMoves.insert(AllEnemyMoves.end(), Moves.begin(), Moves.end());
-//     }
-//     for (unsigned i = 0; i < AllEnemyMoves.size(); i++)
-//     {
-//         if (SpotToCheck == AllEnemyMoves[i])
-//         {
-//             return true;
-//         }
-//     }
-//     return false;
-    
-// }
-
 std::ostream &
 operator<<(std::ostream & OutputStream, const Piece &PrintPiece)
 {

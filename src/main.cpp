@@ -46,19 +46,14 @@ int main(int argc, char * argv[])
         GameBoard.newTurn(TurnCount + 1);
         if (!WhitePlayer.makeRandomMove())
         {
-            std::cout << "Stalemate, White can't move\n";
+            std::cout << "Stalemate or checkmate, White can't move\n";
             break;
         }
-        // GameBoard.printBoard();
-        // std::cout << "**********\n";
         if (!BlackPlayer.makeRandomMove())
         {
-            std::cout << "Stalemate, Black can't move\n";
+            std::cout << "Stalemate or checkmate, Black can't move\n";
             break;
         }
-        // GameBoard.printBoard();
-        // std::cout << "**********\n";
-        // std::cout << "++++++++++\n";
         TurnCount++;
         if (TurnCount > 50)
         {
